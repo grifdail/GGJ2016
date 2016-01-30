@@ -8,9 +8,11 @@ public class AnimalsScript : MonoBehaviour
     public float _chanceToMoveAfterIdle = .4f;
     public float _chanceToMoveAfterMoving = .7f;
     public float _minDist = 2f;
-    public float _maxDist = 4f;  
-    public float _minDistRun = 2f;
-    public float _maxDistRun = 4f;
+    public float _maxDist = 4f;
+    public float _minTimeRun = 2f;
+    public float _maxTimeRun = 4f;
+    public float _minAngle = 20f;
+    public float _maxAngle = 40f;
 
     //Distances vision
     //Voit le félin lorsqu'il est immobile ou s'enfuit
@@ -41,12 +43,12 @@ public class AnimalsScript : MonoBehaviour
     {                                     
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
-    }
+    }           
     
-    void OnDrawGizmosSelected ()
+    void OnDrawGizmos ()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _distVision);
+        Gizmos.DrawWireSphere(transform.position, _distVision);    
         Gizmos.DrawWireSphere(_posStart, _radius);
     }
                            
@@ -64,7 +66,7 @@ public class AnimalsScript : MonoBehaviour
 
     public void StartMoving(float _chancesToMove)
     {                          
-        if (Random.Range(0f, 1f) > _chancesToMove)
+        if (Random.Range(0f, 1f) < _chancesToMove)
         {
             StartCoroutine(Moves());
         }   
@@ -109,7 +111,7 @@ public class AnimalsScript : MonoBehaviour
         {
             //Le temps que l'animal passe à courir avant de check sur le joueur le poursuit toujours
             float _timeBeforeCheckingPlayer = Random.Range(4f, 6f);
-            float _timeTillChangeDirection = Random.Range(_minDistRun, _maxDistRun);
+            float _timeTillChangeDirection = Random.Range(_minTimeRun, _maxTimeRun);
             Vector3 _destination = (transform.position - Player.transform.position) * 100f;
                           
             while (_timeBeforeCheckingPlayer > 0f)
@@ -125,10 +127,10 @@ public class AnimalsScript : MonoBehaviour
                 }
                 else
                 {
-                    _timeTillChangeDirection = Random.Range(_minDistRun, _maxDistRun);
+                    _timeTillChangeDirection = Random.Range(_minTimeRun, _maxTimeRun);
 
                     float angle = Mathf.Atan2(_destination.y, _destination.x) * Mathf.Rad2Deg;
-                    angle += Random.Range(20f, 40f) * (Random.value > 0.5f ? -1 : 1);    
+                    angle += Random.Range(_minAngle, _maxAngle) * (Random.value > 0.5f ? -1 : 1);    
                     _destination = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * _destination.magnitude; 
                 }
 
