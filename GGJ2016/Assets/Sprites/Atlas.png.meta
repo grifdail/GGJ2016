@@ -1,9 +1,29 @@
 fileFormatVersion: 2
 guid: 5cb54d4b892c9b144a402d396bb97b80
-timeCreated: 1454193039
+timeCreated: 1454195764
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Atlas_0
+    21300002: Atlas_1
+    21300004: Atlas_2
+    21300006: Atlas_3
+    21300008: Atlas_4
+    21300010: Atlas_5
+    21300012: Atlas_6
+    21300014: Atlas_7
+    21300016: Atlas_8
+    21300018: Atlas_9
+    21300020: Atlas_11
+    21300022: Atlas_12
+    21300024: Atlas_13
+    21300026: Atlas_14
+    21300028: Atlas_16
+    21300030: Atlas_18
+    21300032: Atlas_20
+    21300034: Atlas_22
+    21300036: Atlas_23
+    21300038: Atlas_24
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,29 +47,229 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 4096
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 0
-  textureType: -1
+  alphaIsTransparency: 1
+  textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Atlas_0
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 3928
+        width: 159
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_1
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 3931
+        width: 157
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_2
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 3806
+        width: 398
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_3
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 3891
+        width: 254
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_4
+      rect:
+        serializedVersion: 2
+        x: 1224
+        y: 3889
+        width: 300
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_5
+      rect:
+        serializedVersion: 2
+        x: 1539
+        y: 3720
+        width: 368
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_6
+      rect:
+        serializedVersion: 2
+        x: 1990
+        y: 3232
+        width: 1986
+        height: 778
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_7
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 3737
+        width: 135
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_8
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 3721
+        width: 150
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_9
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 3763
+        width: 112
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_11
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 3247
+        width: 169
+        height: 335
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_12
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 3352
+        width: 456
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_13
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 3340
+        width: 342
+        height: 331
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_14
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 3128
+        width: 199
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_16
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 2999
+        width: 169
+        height: 335
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_18
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 3005
+        width: 502
+        height: 330
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_20
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 2969
+        width: 517
+        height: 330
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_22
+      rect:
+        serializedVersion: 2
+        x: 1986
+        y: 1874
+        width: 1990
+        height: 1314
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_23
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 2024
+        width: 1186
+        height: 846
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_24
+      rect:
+        serializedVersion: 2
+        x: 1551
+        y: 2403
+        width: 169
+        height: 335
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
