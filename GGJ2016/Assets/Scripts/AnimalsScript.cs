@@ -20,8 +20,10 @@ public class AnimalsScript : MonoBehaviour
 
     public GameObject Player;
 
-    public bool _isFleeing = false;
-    public bool _isMoving = false;             
+    private bool _isFleeing = false;         
+
+    private Vector3 _posStart;
+    public float _radius = 15f;   
                                      
     void Start()
     {
@@ -30,7 +32,9 @@ public class AnimalsScript : MonoBehaviour
         //Lorsqu'il atteint une fin de boucle, il lance la fonction depuis l'animation
         //A la place je fais une Coroutine pour l'instant
 
-        StartCoroutine(MimicIdleAnim()); 
+        StartCoroutine(MimicIdleAnim());
+
+        _posStart = this.transform.position;
     }
 
     void Update ()
@@ -43,6 +47,7 @@ public class AnimalsScript : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _distVision);
+        Gizmos.DrawWireSphere(_posStart, _radius);
     }
                            
     private IEnumerator MimicIdleAnim()
@@ -71,10 +76,13 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private IEnumerator Moves ()
-    {                      
-        _isMoving = true;
-                       
-        Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5f ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z); 
+    {                            
+        Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5f ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z);
+
+        if ((_destination - _posStart).magnitude > _radius)
+        {                                                                     
+            _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
+        }                   
 
         while (transform.position != _destination)
         {                                           
@@ -83,8 +91,7 @@ public class AnimalsScript : MonoBehaviour
         }                       
 
         yield return new WaitForSeconds(Random.Range(.1f, .5f));
-
-        _isMoving = false;
+                             
         StartMoving(_chanceToMoveAfterMoving);
     }
 
