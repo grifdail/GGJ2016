@@ -44,8 +44,8 @@ public class AnimalsScript : MonoBehaviour
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
     }           
-    
-    void OnDrawGizmos ()
+                
+    void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _distVision);    
@@ -84,9 +84,9 @@ public class AnimalsScript : MonoBehaviour
         if ((_destination - _posStart).magnitude > _radius)
         {                                                                     
             _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
-        }                   
-
-        while (transform.position != _destination)
+        }
+                                                                                                                   
+        while (transform.position != _destination && !Physics.Raycast(transform.position, _destination - transform.position, _speed*2))
         {                                           
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
@@ -118,6 +118,7 @@ public class AnimalsScript : MonoBehaviour
             {
                 _timeBeforeCheckingPlayer -= Time.deltaTime;
 
+                if (!Physics.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
                 this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
 
                 if (_timeTillChangeDirection > 0f)
