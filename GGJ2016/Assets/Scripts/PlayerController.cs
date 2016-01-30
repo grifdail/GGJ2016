@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 _movement = Vector3.zero;
 
+    public bool isCarryingACorpse = false;
+
 	// Use this for initialization
 	void Start () {
 	    if (accelerationResponse == null)
