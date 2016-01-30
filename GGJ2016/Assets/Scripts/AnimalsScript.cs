@@ -2,12 +2,18 @@
 using System.Collections;   
 
 public class AnimalsScript : MonoBehaviour
-{      
+{
     public float _speed = .05f;
+    public float _speedRun = .15f;
     public float _chanceToMoveAfterIdle = .4f;
     public float _chanceToMoveAfterMoving = .7f;
     public float _minDist = 2f;
-    public float _maxDist = 4f;
+    public float _maxDist = 4f;  
+    public float _minDistRun = 2f;
+    public float _maxDistRun = 4f;
+    public float _distVision = 15f;
+
+    public GameObject Player;
 
     public bool _isFleeing = false;
     public bool _isMoving = false;
@@ -29,14 +35,15 @@ public class AnimalsScript : MonoBehaviour
         //Debug pour activer la fuite
         if (_debugStartFleeing)
         {
+            StopAllCoroutines();
             StartCoroutine(Fleeing());
-            _debugStartFleeing = false;
+            _debugStartFleeing = false;      
         }                    
     }
               
     private IEnumerator MimicIdleAnim()
     {
-        print("MimicIdleAnim");
+        print("MimicIdleAnim");       
         float _timeAnimation = 3.5f;
         while (_timeAnimation > 0f)
         {
@@ -48,8 +55,8 @@ public class AnimalsScript : MonoBehaviour
     }
 
     public void StartMoving(float _chancesToMove)
-    {
-        print("StartMoving");
+    {      
+        print("StartMoving");                     
         if (Random.Range(0f, 1f) > _chancesToMove)
         {
             StartCoroutine(Moves());
@@ -62,11 +69,10 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private IEnumerator Moves ()
-    {
-        print("Moves");
+    {                      
         _isMoving = true;
                        
-        Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5 ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z); 
+        Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5f ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z); 
 
         while (transform.position != _destination)
         {                                           
@@ -82,16 +88,52 @@ public class AnimalsScript : MonoBehaviour
           
     private IEnumerator Fleeing()
     {
-        //Le temps que l'animal passe à courir avant de check sur le joueur le poursuit toujours
-        //float _timeBeforeCheckingPlayer = 5f;
+        _isFleeing = true;
 
-
-        Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5 ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z);
-
-        while (transform.position != _destination)
+        while (_isFleeing)
         {
-            //this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
-            yield return null;
-        }         
+            //Le temps que l'animal passe à courir avant de check sur le joueur le poursuit toujours
+            float _timeBeforeCheckingPlayer = Random.Range(4f, 6f);
+            float _timeTillChangeDirection = Random.Range(_minDistRun, _maxDistRun);
+            Vector3 _destination = (transform.position - Player.transform.position) * 100f;
+                          
+            while (_timeBeforeCheckingPlayer > 0f)
+            {
+                _timeBeforeCheckingPlayer -= Time.deltaTime;
+
+                this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
+
+                if (_timeTillChangeDirection > 0f)
+                {
+                    _timeTillChangeDirection -= Time.deltaTime; 
+                    yield return null;
+                }
+                else
+                {
+                    _timeTillChangeDirection = Random.Range(_minDistRun, _maxDistRun);
+
+                    float angle = Mathf.Atan2(_destination.y, _destination.x) * Mathf.Rad2Deg;
+                    angle += Random.Range(20f, 40f) * (Random.value > 0.5f ? -1 : 1);    
+                    _destination = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * _destination.magnitude; 
+                }
+            }
+
+            if (!CheckPlayer())
+            {
+                _isFleeing = true;
+            }
+        }     
+    }
+
+    private bool CheckPlayer ()
+    {
+        float _distPlayer = (transform.position - Player.transform.position).magnitude;
+
+        if (_distPlayer < _distVision)
+        {
+            return true;
+        }
+        else
+            return false; 
     }
 }
