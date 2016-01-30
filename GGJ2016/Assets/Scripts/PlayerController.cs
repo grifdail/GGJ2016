@@ -7,10 +7,11 @@ public class PlayerController : MonoBehaviour {
     public AnimationCurve accelerationResponse = AnimationCurve.Linear(0, 0, 1, 1);
     public float acc = 1;
     public float rotationAcc = 1;
+    public float runBoost = 1;
+    public float speedRotationInfluence = 1;
 
-
-    private Vector3 heading = Vector3.left;
-    private Vector3 targetHeading = Vector3.left;
+    private float heading = 0;
+    private float targetHeading = 0;
     private float speed = 0;
     private float targetSpeed = 0;
 
@@ -27,15 +28,18 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 axes = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-        targetHeading = axes.normalized;
-        targetSpeed = axes.magnitude;
+        float d2r = Mathf.Deg2Rad;
+        Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
+        targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
+        targetSpeed = accelerationResponse.Evaluate(axes.magnitude);
+        if (Input.GetAxis("TriggersL_1") > 0.5)
+        {
+            targetSpeed *= runBoost;
+        }
         speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
-        float actualSpeed = maxSpeed * accelerationResponse.Evaluate(speed);
-        heading = Vector3.RotateTowards(heading, targetHeading, rotationAcc * Time.deltaTime / speed, 0);
-        transform.Translate(actualSpeed * heading * Time.deltaTime);
-        //Debug.Log(actualSpeed);
-
-        //transform.Translate(axes* Time.deltaTime);
-	}
+        float actualSpeed = maxSpeed * speed;
+        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime );
+        transform.Translate(actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0) * Time.deltaTime);
+        
+    }
 }
