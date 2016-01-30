@@ -11,14 +11,17 @@ public class AnimalsScript : MonoBehaviour
     public float _maxDist = 4f;  
     public float _minDistRun = 2f;
     public float _maxDistRun = 4f;
+
+    //Distances vision
+    //Voit le félin lorsqu'il est immobile ou s'enfuit
     public float _distVision = 15f;
+    //Voit le félin lorsqu'il est trop proche de lui (lors d'une fuite), changeant de direction
+    public float _distMini = 5f; 
 
     public GameObject Player;
 
     public bool _isFleeing = false;
-    public bool _isMoving = false;
-
-    public bool _debugStartFleeing = false;
+    public bool _isMoving = false;             
                                      
     void Start()
     {
@@ -27,23 +30,23 @@ public class AnimalsScript : MonoBehaviour
         //Lorsqu'il atteint une fin de boucle, il lance la fonction depuis l'animation
         //A la place je fais une Coroutine pour l'instant
 
-        StartCoroutine(MimicIdleAnim());    
+        StartCoroutine(MimicIdleAnim()); 
     }
 
     void Update ()
-    {
-        //Debug pour activer la fuite
-        if (_debugStartFleeing)
-        {
-            StopAllCoroutines();
-            StartCoroutine(Fleeing());
-            _debugStartFleeing = false;      
-        }                    
+    {                                     
+        if (!_isFleeing && CheckPlayer(_distVision))
+            StartFleeing();                
     }
-              
-    private IEnumerator MimicIdleAnim()
+    
+    void OnDrawGizmosSelected ()
     {
-        print("MimicIdleAnim");       
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _distVision);
+    }
+                           
+    private IEnumerator MimicIdleAnim()
+    {      
         float _timeAnimation = 3.5f;
         while (_timeAnimation > 0f)
         {
@@ -55,8 +58,7 @@ public class AnimalsScript : MonoBehaviour
     }
 
     public void StartMoving(float _chancesToMove)
-    {      
-        print("StartMoving");                     
+    {                          
         if (Random.Range(0f, 1f) > _chancesToMove)
         {
             StartCoroutine(Moves());
@@ -84,6 +86,12 @@ public class AnimalsScript : MonoBehaviour
 
         _isMoving = false;
         StartMoving(_chanceToMoveAfterMoving);
+    }
+
+    private void StartFleeing ()
+    {             
+        StopAllCoroutines();
+        StartCoroutine(Fleeing());   
     }
           
     private IEnumerator Fleeing()
@@ -116,20 +124,28 @@ public class AnimalsScript : MonoBehaviour
                     angle += Random.Range(20f, 40f) * (Random.value > 0.5f ? -1 : 1);    
                     _destination = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * _destination.magnitude; 
                 }
+
+                if ((transform.position - Player.transform.position).magnitude < _distMini)
+                {
+                    StartCoroutine(Fleeing());
+                    yield break;
+                }                              
             }
 
-            if (!CheckPlayer())
+            if (!CheckPlayer(_distVision))
             {
-                _isFleeing = true;
+                _isFleeing = false;
             }
-        }     
+        }
+
+        StartCoroutine(MimicIdleAnim());
     }
 
-    private bool CheckPlayer ()
+    private bool CheckPlayer (float _dist)
     {
         float _distPlayer = (transform.position - Player.transform.position).magnitude;
 
-        if (_distPlayer < _distVision)
+        if (_distPlayer < _dist)
         {
             return true;
         }
