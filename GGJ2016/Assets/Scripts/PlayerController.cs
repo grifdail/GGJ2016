@@ -12,10 +12,17 @@ public class PlayerController : MonoBehaviour {
 
     private float heading = 0;
     private float targetHeading = 0;
-    private float speed = 0;
+    [HideInInspector]
+    public float speed = 0;
     private float targetSpeed = 0;
 
+    [HideInInspector]
+    public bool isJumping = false;
+    private float jumpProgression = 0;
+    public float jumpDuration = 0;
+    public float jumpBoost = 0;
 
+    private Vector3 _movement = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +35,28 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (isJumping)
+        {
+            UpdateJumping();
+        } else
+        {
+            UpdateRunning();
+        }
+        
+    }
+
+    void UpdateJumping()
+    {
+        jumpProgression -= Time.deltaTime;
+        if (jumpProgression<0)
+        {
+            isJumping = false;
+        }
+        transform.Translate(_movement * Time.deltaTime * jumpBoost);
+    }
+
+    void UpdateRunning()
+    {
         float d2r = Mathf.Deg2Rad;
         Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
         targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
@@ -38,8 +67,20 @@ public class PlayerController : MonoBehaviour {
         }
         speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
         float actualSpeed = maxSpeed * speed;
-        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime );
-        transform.Translate(actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0) * Time.deltaTime);
-        
+        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
+        _movement = actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
+        transform.Translate(_movement * Time.deltaTime);
+        if (Input.GetButtonDown("A_1"))
+        {
+            isJumping = true;
+            jumpProgression = jumpDuration;
+        };
     }
+
+    public Vector3 GetTargetPosition()
+    {
+        return transform.position + _movement;
+    }
+
+
 }
