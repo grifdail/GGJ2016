@@ -43,7 +43,19 @@ public class AnimalsScript : MonoBehaviour
     {                                     
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
-    }           
+    }         
+   
+    void OnTriggerEnter (Collider coll)
+    {                                 
+        if (coll.gameObject.tag == "Player")
+        {                
+            Player.GetComponent<PlayerController>().isCarryingACorpse = true;
+            GetComponentInParent<HoardScript>()._hoard.Remove(this.gameObject);
+            GetComponentInParent<HoardScript>().StartCoroutine(GetComponentInParent<HoardScript>().DestroyHoard());
+            Destroy(this.gameObject);
+        }
+    }
+          
                 
     void OnDrawGizmosSelected ()
     {
