@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
@@ -15,12 +16,16 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public float speed = 0;
     private float targetSpeed = 0;
+    [HideInInspector]
+    public bool isDragging = false;
 
     [HideInInspector]
     public bool isJumping = false;
     private float jumpProgression = 0;
     public float jumpDuration = 0;
     public float jumpBoost = 0;
+
+    private List<Draggable> draggableInRange;
 
     private Vector3 _movement = Vector3.zero;
 
@@ -31,6 +36,7 @@ public class PlayerController : MonoBehaviour {
             Debug.LogError("GameObject does'nt have an accelerationResponse set");
             Destroy(this);
         }
+        draggableInRange = new List<Draggable>();
 	}
 	
 	// Update is called once per frame
@@ -57,24 +63,47 @@ public class PlayerController : MonoBehaviour {
 
     void UpdateRunning()
     {
+        if (Input.GetButtonDown("A_1"))
+        {
+            UpdateContextAction();
+        };
         float d2r = Mathf.Deg2Rad;
         Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
-        targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
         targetSpeed = accelerationResponse.Evaluate(axes.magnitude);
-        if (Input.GetAxis("TriggersL_1") > 0.5)
+        if (targetSpeed > 0.5)
+        {
+            targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
+        }
+        if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
             targetSpeed *= runBoost;
+            
         }
         speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
         float actualSpeed = maxSpeed * speed;
         heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
         _movement = actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
         transform.Translate(_movement * Time.deltaTime);
-        if (Input.GetButtonDown("A_1"))
+        
+    }
+
+    void UpdateContextAction ()
+    {
+        foreach (Draggable  stuf in draggableInRange)
+        {
+            //item.init(this);
+            if (stuf != null)
+            {
+                isDragging = true;
+                stuf.init(this);
+                return;
+            }
+        }
+        if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
             isJumping = true;
             jumpProgression = jumpDuration;
-        };
+        }
     }
 
     public Vector3 GetTargetPosition()
@@ -82,5 +111,23 @@ public class PlayerController : MonoBehaviour {
         return transform.position + _movement;
     }
 
+    public Vector3 GetDragTarget()
+    {
+        return transform.position + Vector3.forward * (_movement.x > 0f ? 1 : -1) ;
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("draggable")) {
+            draggableInRange.Add(collider.GetComponent<Draggable>());
+        }
+    }
+    
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("draggable")) {
+            draggableInRange.Remove(collider.GetComponent<Draggable>());
+        }
+    }
 
 }
