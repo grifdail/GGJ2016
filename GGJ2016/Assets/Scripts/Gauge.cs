@@ -22,9 +22,8 @@ public class Gauge : MonoBehaviour {
 	
 	}
 
-    void updateBar()
+    public void updateBar()
     {
-        Debug.Log("gegzg");
         transform.localScale = new Vector3((value- min)/(max- min), 1, 1);
     }
 }

@@ -18,17 +18,19 @@ public class AnimalsScript : MonoBehaviour
     //Voit le félin lorsqu'il est immobile ou s'enfuit
     public float _distVision = 15f;
     //Voit le félin lorsqu'il est trop proche de lui (lors d'une fuite), changeant de direction
-    public float _distMini = 5f; 
+    public float _distMini = 5f;
 
     public GameObject Player;
+    public GameObject Wind;
 
     private bool _isFleeing = false;         
 
     private Vector3 _posStart;
-    public float _radius = 15f;   
-                                     
+    public float _radius = 15f;
+    private float _debugRadiusDetection;
+
     void Start()
-    {
+    {                                               
         //Lance l'animation d'Idle  
         //Ne bouge pas tant qu'il joue son anim
         //Lorsqu'il atteint une fin de boucle, il lance la fonction depuis l'animation
@@ -40,12 +42,12 @@ public class AnimalsScript : MonoBehaviour
     }
 
     void Update ()
-    {                                     
+    {                               
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
     }         
    
-    void OnTriggerEnter (Collider coll)
+    void OnTriggerEnter2D (Collider2D coll)
     {                                 
         if (coll.gameObject.tag == "Player")
         {                
@@ -54,18 +56,20 @@ public class AnimalsScript : MonoBehaviour
             GetComponentInParent<HoardScript>().StartCoroutine(GetComponentInParent<HoardScript>().DestroyHoard());
             Destroy(this.gameObject);
         }
-    }
-          
+    }      
                 
     void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _distVision);    
-        Gizmos.DrawWireSphere(_posStart, _radius);
+        //Gizmos.DrawWireSphere(transform.position, _distVision);    
+        // Gizmos.DrawWireSphere(_posStart, _radius);
+
+        Gizmos.DrawWireSphere(transform.position, _debugRadiusDetection);
     }
                            
     private IEnumerator MimicIdleAnim()
-    {      
+    {
+        print("MimicIdleAnim");
         float _timeAnimation = 3.5f;
         while (_timeAnimation > 0f)
         {
@@ -90,16 +94,21 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private IEnumerator Moves ()
-    {                            
+    {
+        print("Moves");
         Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5f ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z);
-
+        print(_destination);
+                                                                           
         if ((_destination - _posStart).magnitude > _radius)
-        {                                                                     
+        {                                                      
             _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
         }
-                                                                                                                   
-        while (transform.position != _destination && !Physics.Raycast(transform.position, _destination - transform.position, _speed*2))
-        {                                           
+
+        Debug.DrawRay(transform.position, _destination - transform.position, Color.red, _speed * 2);
+                                                                                         
+        while (transform.position != _destination && !Physics2D.Raycast(transform.position, _destination - transform.position, _speed*2))
+        {
+            print("fvzfzeefz");
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
         }                       
@@ -110,7 +119,8 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private void StartFleeing ()
-    {             
+    {
+        print("StartFleeing");
         StopAllCoroutines();
         StartCoroutine(Fleeing());   
     }
@@ -130,7 +140,7 @@ public class AnimalsScript : MonoBehaviour
             {
                 _timeBeforeCheckingPlayer -= Time.deltaTime;
 
-                if (!Physics.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
+                if (!Physics2D.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
                 this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
 
                 if (_timeTillChangeDirection > 0f)
@@ -165,9 +175,27 @@ public class AnimalsScript : MonoBehaviour
 
     private bool CheckPlayer (float _dist)
     {
+        print("CheckPlayer");
+        //Plusieurs paramètres : 
+        // - la distance du joueur
+        // - s'il fait du bruit et la vision (donc sa vitesse, les herbes et les brindilles) Pour simplifier on considère que l'herbe réduit le bruit, pas qu'elle cache le joueur
+        // - le sens du vent       
         float _distPlayer = (transform.position - Player.transform.position).magnitude;
 
-        if (_distPlayer < _dist)
+        // On ajoute jusqu'à 100% de la distance de vision si le joueur fait beaucoup de bruit
+        float percentNoise = Player.GetComponent<PlayerController>().currentSpeed /15f;
+                                
+        //On ajoute jusqu'à 100% de la distance de vision si le joueur est contre le vent
+        float percentOdor = 0f; 
+        float anglePerso = Mathf.Atan2(Player.transform.position.y - transform.position.y, Player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+        anglePerso = anglePerso + ((anglePerso < 0) ? 360 : 0);
+
+         if (anglePerso % 360 < (Wind.GetComponent<WindScript>().CurrentDirection) + 20f && anglePerso % 360 > (Wind.GetComponent<WindScript>().CurrentDirection) - 20f)
+            percentOdor = 100f;
+                             
+        _debugRadiusDetection = _dist + _dist * (percentNoise + percentOdor);
+
+        if (_distPlayer < _dist + _dist * (percentNoise + percentOdor))
         {
             return true;
         }

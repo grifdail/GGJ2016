@@ -1,0 +1,199 @@
+fileFormatVersion: 2
+guid: 73ac0fddae3f9c0468d2875542c7d037
+timeCreated: 1454144411
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bras
+    21300002: pied
+    21300004: tete
+    21300006: cuisse
+    21300008: bassin
+    21300010: bide
+    21300012: avant_bras
+    21300014: avant_jambe
+    21300016: machoire
+    21300018: pied_02
+    21300020: oreille
+    21300022: main_02
+    21300024: queue
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: bras
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 727
+        width: 130
+        height: 263
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pied
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 856
+        width: 161
+        height: 129
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tete
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 832
+        width: 211
+        height: 156
+      alignment: 9
+      pivot: {x: .871940434, y: .73674053}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cuisse
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 741
+        width: 280
+        height: 275
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bassin
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 475
+        width: 193
+        height: 192
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bide
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 416
+        width: 506
+        height: 268
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: avant_bras
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 166
+        width: 263
+        height: 250
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: avant_jambe
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 36
+        width: 270
+        height: 244
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: machoire
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 255
+        width: 177
+        height: 129
+      alignment: 9
+      pivot: {x: .827386022, y: .841931224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: pied_02
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 15
+        width: 183
+        height: 71
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: oreille
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 35
+        width: 181
+        height: 78
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: main_02
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 35
+        width: 71
+        height: 149
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: queue
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 272
+        width: 81
+        height: 493
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

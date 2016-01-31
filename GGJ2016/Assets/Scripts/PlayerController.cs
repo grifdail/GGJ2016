@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public float speed = 0;
     private float targetSpeed = 0;
+    public float currentSpeed;      
     [HideInInspector]
     public bool isDragging = false;
 
@@ -31,9 +32,13 @@ public class PlayerController : MonoBehaviour {
 
     public bool isCarryingACorpse = false;
 
-	// Use this for initialization
-	void Start () {
-	    if (accelerationResponse == null)
+    private Vector3 _saveScale;
+                             
+    void Start ()
+    {
+        _saveScale = this.transform.localScale;
+
+        if (accelerationResponse == null)
         {
             Debug.LogError("GameObject doesn't have an accelerationResponse set");
             Destroy(this);
@@ -58,7 +63,7 @@ public class PlayerController : MonoBehaviour {
         jumpProgression -= Time.deltaTime;
         if (jumpProgression<0)
         {
-            //GetComponent<Animator>().SetBool("isJumping", false);
+            GetComponent<Animator>().SetBool("IsJumping", false);
             isJumping = false;
         }
         transform.Translate(_movement * Time.deltaTime * jumpBoost);
@@ -73,35 +78,33 @@ public class PlayerController : MonoBehaviour {
         float d2r = Mathf.Deg2Rad;
         Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
         targetSpeed = accelerationResponse.Evaluate(axes.magnitude);
+
         if (targetSpeed > 0.5f)
         {
             targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
         }
+
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
             targetSpeed *= runBoost;   
         }
-        speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
-        float actualSpeed = maxSpeed * speed;
-        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
-        _movement = actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
-        transform.Translate(_movement * Time.deltaTime);
 
-        /*if (actualSpeed == 0)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", false);
-            GetComponent<Animator>().SetBool("isRunning", false);
-        }
-        else if (actualSpeed < 5f)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", true);
-            GetComponent<Animator>().SetBool("isRunning", false);
-        }
-        else if (actualSpeed >= 5f)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", false);
-            GetComponent<Animator>().SetBool("isRunning", true);
-        }  */
+        speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
+        currentSpeed = maxSpeed * speed;
+        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
+
+        _movement = currentSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
+        CheckCollision(_movement * Time.deltaTime);
+        
+               
+
+        GetComponent<Animator>().SetFloat("Blend", currentSpeed/15f);
+
+        if (Input.GetAxis("L_XAxis_1") > 0)
+            transform.localScale = new Vector3(-_saveScale.x, _saveScale.y, _saveScale.z);
+        else
+            transform.localScale = new Vector3(_saveScale.x, _saveScale.y, _saveScale.z);
+                      
     }
 
     void UpdateContextAction ()
@@ -116,9 +119,10 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
         }
+
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
-            //GetComponent<Animator>().SetBool("isJumping", true);
+            GetComponent<Animator>().SetBool("IsJumping", true);
             isJumping = true;
             jumpProgression = jumpDuration;
         }
@@ -146,6 +150,18 @@ public class PlayerController : MonoBehaviour {
         if (collider.CompareTag("draggable")) {
             draggableInRange.Remove(collider.GetComponent<Draggable>());
         }
+    }
+
+    void CheckCollision(Vector3 d)
+    {
+       // RaycastHit2D coll = Physics2D.CircleCast(transform.position, 1, d, d.magnitude, LayerMask.NameToLayer("obstacle"));
+        //if (coll.collider != null) {
+        //    Debug.Log("Fuck");
+        //    transform.position = coll.centroid;
+        //} else
+        //{
+            transform.Translate(d);
+        //}
     }
 
 }
