@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
     private Camera _camera;
     private float defaultSize = 5;
     public float zoomRatio = 1;
+    public Vector3 offset = Vector3.zero;
 
     //public Transform playerTransform;
     public PlayerController playerController;
@@ -19,7 +20,7 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = Vector3.Lerp(transform.position, playerController.GetTargetPosition() + Vector3.forward * -10, speed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position - offset, playerController.GetTargetPosition() + Vector3.forward * -10, speed * Time.deltaTime) + offset;
         _camera.orthographicSize = defaultSize + playerController.speed * zoomRatio;
 	}
 }
