@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class HoardScript : MonoBehaviour {
 
     public List<GameObject> _hoard = new List<GameObject>();
-                                     
-	void Start ()
+
+    public GameObject Player;
+
+    void Start ()
     {              
         for (int i = 0; i < this.transform.childCount; i++)
         {
@@ -20,7 +22,7 @@ public class HoardScript : MonoBehaviour {
         {                 
             foreach (GameObject child in _hoard)
             {                
-                if (!child.GetComponent<MeshRenderer>().isVisible)
+                if ((child.transform.position - Player.transform.position).magnitude > 50f)
                 {      
                     _hoard.Remove(child);  
                     Destroy(child.gameObject);
