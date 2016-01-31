@@ -94,10 +94,14 @@ public class PlayerController : MonoBehaviour {
         heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
 
         _movement = currentSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
-        CheckCollision(_movement * Time.deltaTime);
-        
-               
-
+          
+        /*RaycastHit2D hit = Physics2D.Raycast(transform.position, _movement, 1f);
+        Debug.DrawRay(transform.position, _movement, Color.blue, 1f);
+        if (hit.collider != null)
+            Debug.Log(hit.collider.name);
+        else*/          
+        transform.Translate(_movement * Time.deltaTime);
+                                   
         GetComponent<Animator>().SetFloat("Blend", currentSpeed/15f);
 
         if (Input.GetAxis("L_XAxis_1") > 0)
@@ -150,18 +154,5 @@ public class PlayerController : MonoBehaviour {
         if (collider.CompareTag("draggable")) {
             draggableInRange.Remove(collider.GetComponent<Draggable>());
         }
-    }
-
-    void CheckCollision(Vector3 d)
-    {
-       // RaycastHit2D coll = Physics2D.CircleCast(transform.position, 1, d, d.magnitude, LayerMask.NameToLayer("obstacle"));
-        //if (coll.collider != null) {
-        //    Debug.Log("Fuck");
-        //    transform.position = coll.centroid;
-        //} else
-        //{
-            transform.Translate(d);
-        //}
-    }
-
+    }         
 }

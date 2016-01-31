@@ -55,8 +55,12 @@ public class AnimalsScript : MonoBehaviour
         if (coll.gameObject.tag == "Player")
         {                
             Player.GetComponent<PlayerController>().isCarryingACorpse = true;
-            GetComponentInParent<HoardScript>()._hoard.Remove(this.gameObject);
-            GetComponentInParent<HoardScript>().StartCoroutine(GetComponentInParent<HoardScript>().DestroyHoard());
+
+            if (GetComponentInParent<HoardScript>() != null)
+            {
+                GetComponentInParent<HoardScript>()._hoard.Remove(this.gameObject);
+                GetComponentInParent<HoardScript>().StartCoroutine(GetComponentInParent<HoardScript>().DestroyHoard());
+            }
             Destroy(this.gameObject);
         }
     }      
