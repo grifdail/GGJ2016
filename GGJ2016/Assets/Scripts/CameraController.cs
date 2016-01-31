@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour {
         defaultSize = _camera.orthographicSize;
         bound = GameObject.Find("SOL").GetComponent<Renderer>().bounds;
         bound.extents = new Vector3(bound.extents.x - cameraBoundSize, bound.extents.y - cameraBoundSize, 1000);
-        Debug.Log(bound.extents);
 	}
 	
 	// Update is called once per frame
