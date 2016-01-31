@@ -1,9 +1,14 @@
 fileFormatVersion: 2
 guid: a09e5d1e8aa84a94d9206aed39d2ed99
-timeCreated: 1454195291
+timeCreated: 1454229035
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Atlas_riviere_0
+    21300002: Atlas_riviere_1
+    21300004: Atlas_riviere_3
+    21300006: Atlas_riviere_4
+    21300008: Atlas_riviere_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +43,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +54,57 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Atlas_riviere_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 1849
+        width: 1555
+        height: 2234
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_riviere_1
+      rect:
+        serializedVersion: 2
+        x: 1658
+        y: 3500
+        width: 1096
+        height: 584
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_riviere_3
+      rect:
+        serializedVersion: 2
+        x: 2312
+        y: 3522
+        width: 103
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_riviere_4
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 824
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Atlas_riviere_5
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 112
+        width: 2780
+        height: 2721
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
