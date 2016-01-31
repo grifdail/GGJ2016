@@ -1,6 +1,8 @@
 fileFormatVersion: 2
-guid: adf1c56ba844f45f0ac7bdc95d1e550e
-timeCreated: 1454242780
+guid: 564c6c06f5780c24093ffe621ad8d08b
+labels:
+- Uni2D_SourceTexture
+timeCreated: 1454247094
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -27,10 +29,10 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 1024
+  maxTextureSize: 4096
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -44,9 +46,9 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 129.600006
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     sprites: []
