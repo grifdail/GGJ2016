@@ -21,14 +21,16 @@ public class AnimalsScript : MonoBehaviour
     public float _distMini = 5f;
 
     public GameObject Player;
+    public GameObject Wind;
 
     private bool _isFleeing = false;         
 
     private Vector3 _posStart;
-    public float _radius = 15f;   
-                                     
+    public float _radius = 15f;
+    private float _debugRadiusDetection;
+
     void Start()
-    {
+    {                                               
         //Lance l'animation d'Idle  
         //Ne bouge pas tant qu'il joue son anim
         //Lorsqu'il atteint une fin de boucle, il lance la fonction depuis l'animation
@@ -40,12 +42,13 @@ public class AnimalsScript : MonoBehaviour
     }
 
     void Update ()
-    {                                     
+    {
+        CheckPlayer(_distVision);
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
     }         
    
-    void OnTriggerEnter (Collider coll)
+    void OnTriggerEnter2D (Collider2D coll)
     {                                 
         if (coll.gameObject.tag == "Player")
         {                
@@ -59,8 +62,10 @@ public class AnimalsScript : MonoBehaviour
     void OnDrawGizmosSelected ()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _distVision);    
-        Gizmos.DrawWireSphere(_posStart, _radius);
+        //Gizmos.DrawWireSphere(transform.position, _distVision);    
+        // Gizmos.DrawWireSphere(_posStart, _radius);
+
+        Gizmos.DrawWireSphere(transform.position, _debugRadiusDetection);
     }
                            
     private IEnumerator MimicIdleAnim()
@@ -97,7 +102,7 @@ public class AnimalsScript : MonoBehaviour
             _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
         }
                                                                                                                    
-        while (transform.position != _destination && !Physics.Raycast(transform.position, _destination - transform.position, _speed*2))
+        while (transform.position != _destination && !Physics2D.Raycast(transform.position, _destination - transform.position, _speed*2))
         {                                           
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
@@ -129,7 +134,7 @@ public class AnimalsScript : MonoBehaviour
             {
                 _timeBeforeCheckingPlayer -= Time.deltaTime;
 
-                if (!Physics.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
+                if (!Physics2D.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
                 this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
 
                 if (_timeTillChangeDirection > 0f)
@@ -172,15 +177,18 @@ public class AnimalsScript : MonoBehaviour
 
         // On ajoute jusqu'à 100% de la distance de vision si le joueur fait beaucoup de bruit
         float percentNoise = Player.GetComponent<PlayerController>().currentSpeed /15f;
+                                
+        //On ajoute jusqu'à 100% de la distance de vision si le joueur est contre le vent
+        float percentOdor = 0f; 
+        float anglePerso = Mathf.Atan2(Player.transform.position.y - transform.position.y, Player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+        anglePerso = anglePerso + ((anglePerso < 0) ? 360 : 0);
 
-        //On ajoute jusqu'à 50% de la distance de vision si le joueur est contre le vent
-        //float percentOdor = 
+         if (anglePerso % 360 < (Wind.GetComponent<WindScript>().CurrentDirection) + 20f && anglePerso % 360 > (Wind.GetComponent<WindScript>().CurrentDirection) - 20f)
+            percentOdor = 100f;
+                             
+        _debugRadiusDetection = _dist + _dist * (percentNoise + percentOdor);
 
-
-
-        //float _distPercep = _distPlayer 
-
-        if (_distPlayer < _dist)
+        if (_distPlayer < _dist + _dist * (percentNoise + percentOdor))
         {
             return true;
         }
