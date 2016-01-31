@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Health : Gauge{
-
+        /*
     public float hungerBySecond = 1;
 
 	// Use this for initialization
@@ -21,5 +21,5 @@ public class Health : Gauge{
             Debug.Log("Le petit il est mort");
         }
         updateBar();
-    }
+    }  */
 }
