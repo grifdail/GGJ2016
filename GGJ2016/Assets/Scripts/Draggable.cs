@@ -11,14 +11,15 @@ public class Draggable : MonoBehaviour {
                      
 	void Update () {
 	    if (isBeingDragged && dragTarget != null)
-        {       
+        {
             /*if (Input.GetButtonUp("A_1"))
             {
                 dragTarget.isDragging = false;
                 isBeingDragged = false;
             }   */
-            
+
             transform.position = Vector3.Lerp(transform.position, dragTarget.GetDragTarget(), dragSpeed * Time.deltaTime);
+            transform.position = new Vector3 (transform.position.x, transform.position.y, 1.25f);
         }
 	}
 

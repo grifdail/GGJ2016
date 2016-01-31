@@ -29,6 +29,8 @@ public class AnimalsScript : MonoBehaviour
     public float _radius = 15f;
     private float _debugRadiusDetection;
 
+    private Vector3 _saveScale;
+
     void Start()
     {                                               
         //Lance l'animation d'Idle  
@@ -39,6 +41,7 @@ public class AnimalsScript : MonoBehaviour
         StartCoroutine(MimicIdleAnim());
 
         _posStart = this.transform.position;
+        _saveScale = this.transform.localScale;
     }
 
     void Update ()
@@ -109,7 +112,14 @@ public class AnimalsScript : MonoBehaviour
         }
 
         while (transform.position != _destination && !Physics2D.Raycast(transform.position, _destination - transform.position, _speed*2))
-        {                       
+        {
+            float angle = Mathf.Atan2(_destination.y, _destination.x) * Mathf.Rad2Deg;
+            if (angle > 0)
+                transform.localScale = new Vector3(-_saveScale.x, _saveScale.y, _saveScale.z);
+            else
+                transform.localScale = new Vector3(_saveScale.x, _saveScale.y, _saveScale.z);  
+
+
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
         }                       
