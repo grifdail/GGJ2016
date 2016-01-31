@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
         jumpProgression -= Time.deltaTime;
         if (jumpProgression<0)
         {
-            //GetComponent<Animator>().SetBool("isJumping", false);
+            GetComponent<Animator>().SetBool("IsJumping", false);
             isJumping = false;
         }
         transform.Translate(_movement * Time.deltaTime * jumpBoost);
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
-            //GetComponent<Animator>().SetBool("isJumping", true);
+            GetComponent<Animator>().SetBool("IsJumping", true);
             isJumping = true;
             jumpProgression = jumpDuration;
         }
