@@ -42,9 +42,12 @@ public class AnimalsScript : MonoBehaviour
     }
 
     void Update ()
-    {                               
-        if (!_isFleeing && CheckPlayer(_distVision))
-            StartFleeing();                
+    {                              
+        if ((transform.position - Player.transform.position).magnitude < _distMini *3f)
+        {
+            if (!_isFleeing && CheckPlayer(_distVision))
+                StartFleeing();  
+        }
     }         
    
     void OnTriggerEnter2D (Collider2D coll)
@@ -139,9 +142,12 @@ public class AnimalsScript : MonoBehaviour
             while (_timeBeforeCheckingPlayer > 0f)
             {
                 _timeBeforeCheckingPlayer -= Time.deltaTime;
-
-                if (!Physics2D.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
-                this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
+                               
+                Debug.DrawRay(transform.position, _destination - transform.position, Color.red, _speedRun * 2f);
+                if (!Physics2D.Raycast(transform.position, _destination - transform.position, _speedRun * 2f))
+                {                              
+                    this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
+                }                       
 
                 if (_timeTillChangeDirection > 0f)
                 {
