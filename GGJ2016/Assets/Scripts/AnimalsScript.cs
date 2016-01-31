@@ -18,7 +18,7 @@ public class AnimalsScript : MonoBehaviour
     //Voit le félin lorsqu'il est immobile ou s'enfuit
     public float _distVision = 15f;
     //Voit le félin lorsqu'il est trop proche de lui (lors d'une fuite), changeant de direction
-    public float _distMini = 5f; 
+    public float _distMini = 5f;
 
     public GameObject Player;
 
@@ -54,8 +54,7 @@ public class AnimalsScript : MonoBehaviour
             GetComponentInParent<HoardScript>().StartCoroutine(GetComponentInParent<HoardScript>().DestroyHoard());
             Destroy(this.gameObject);
         }
-    }
-          
+    }      
                 
     void OnDrawGizmosSelected ()
     {
@@ -165,7 +164,21 @@ public class AnimalsScript : MonoBehaviour
 
     private bool CheckPlayer (float _dist)
     {
+        //Plusieurs paramètres : 
+        // - la distance du joueur
+        // - s'il fait du bruit et la vision (donc sa vitesse, les herbes et les brindilles) Pour simplifier on considère que l'herbe réduit le bruit, pas qu'elle cache le joueur
+        // - le sens du vent       
         float _distPlayer = (transform.position - Player.transform.position).magnitude;
+
+        // On ajoute jusqu'à 100% de la distance de vision si le joueur fait beaucoup de bruit
+        float percentNoise = Player.GetComponent<PlayerController>().currentSpeed /15f;
+
+        //On ajoute jusqu'à 50% de la distance de vision si le joueur est contre le vent
+        //float percentOdor = 
+
+
+
+        //float _distPercep = _distPlayer 
 
         if (_distPlayer < _dist)
         {

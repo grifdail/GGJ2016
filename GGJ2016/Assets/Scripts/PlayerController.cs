@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public float speed = 0;
     private float targetSpeed = 0;
+    public float currentSpeed;      
     [HideInInspector]
     public bool isDragging = false;
 
@@ -31,9 +32,13 @@ public class PlayerController : MonoBehaviour {
 
     public bool isCarryingACorpse = false;
 
-	// Use this for initialization
-	void Start () {
-	    if (accelerationResponse == null)
+    private Vector3 _saveScale;
+                             
+    void Start ()
+    {
+        _saveScale = this.transform.localScale;
+
+        if (accelerationResponse == null)
         {
             Debug.LogError("GameObject doesn't have an accelerationResponse set");
             Destroy(this);
@@ -81,27 +86,22 @@ public class PlayerController : MonoBehaviour {
         {
             targetSpeed *= runBoost;   
         }
-        speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
-        float actualSpeed = maxSpeed * speed;
-        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
-        _movement = actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
-        transform.Translate(_movement * Time.deltaTime);
 
-        /*if (actualSpeed == 0)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", false);
-            GetComponent<Animator>().SetBool("isRunning", false);
-        }
-        else if (actualSpeed < 5f)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", true);
-            GetComponent<Animator>().SetBool("isRunning", false);
-        }
-        else if (actualSpeed >= 5f)
-        {
-            GetComponent<Animator>().SetBool("isCrawling", false);
-            GetComponent<Animator>().SetBool("isRunning", true);
-        }  */
+        speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
+        currentSpeed = maxSpeed * speed;
+        heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
+
+        _movement = currentSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
+        transform.Translate(_movement * Time.deltaTime);
+               
+
+        GetComponent<Animator>().SetFloat("Blend", currentSpeed/15f);
+
+        if (Input.GetAxis("L_XAxis_1") > 0)
+            transform.localScale = new Vector3(-_saveScale.x, _saveScale.y, _saveScale.z);
+        else
+            transform.localScale = new Vector3(_saveScale.x, _saveScale.y, _saveScale.z);
+                      
     }
 
     void UpdateContextAction ()
