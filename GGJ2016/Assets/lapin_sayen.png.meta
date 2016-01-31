@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: e0ce8ba75881e034d90d9f4ab5a524a8
+timeCreated: 1454207106
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: lapin_sayen_0
+    21300002: lapin_sayen_1
+    21300004: lapin_sayen_2
+    21300006: lapin_sayen_3
+    21300008: lapin_sayen_4
+    21300010: lapin_sayen_5
+    21300012: lapin_sayen_6
+    21300014: lapin_sayen_7
+    21300016: lapin_sayen_8
+    21300018: lapin_sayen_9
+    21300020: lapin_sayen_10
+    21300022: lapin_sayen_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: lapin_sayen_0
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 3302
+        width: 700
+        height: 402
+      alignment: 9
+      pivot: {x: .467980951, y: .221227244}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_1
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 3335
+        width: 160
+        height: 377
+      alignment: 9
+      pivot: {x: .636566937, y: .171562865}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_2
+      rect:
+        serializedVersion: 2
+        x: 1454
+        y: 3245
+        width: 210
+        height: 611
+      alignment: 9
+      pivot: {x: .661857069, y: .146351323}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_3
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2801
+        width: 921
+        height: 971
+      alignment: 9
+      pivot: {x: .481547356, y: .932563603}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_4
+      rect:
+        serializedVersion: 2
+        x: 3062
+        y: 2777
+        width: 927
+        height: 1207
+      alignment: 9
+      pivot: {x: .366428733, y: .274714023}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_5
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 2127
+        width: 897
+        height: 1047
+      alignment: 9
+      pivot: {x: .445861399, y: .161052361}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_6
+      rect:
+        serializedVersion: 2
+        x: 1634
+        y: 1944
+        width: 201
+        height: 639
+      alignment: 9
+      pivot: {x: .424147576, y: .895387471}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_7
+      rect:
+        serializedVersion: 2
+        x: 1941
+        y: 1932
+        width: 202
+        height: 641
+      alignment: 9
+      pivot: {x: .543129504, y: .85337925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_8
+      rect:
+        serializedVersion: 2
+        x: 2394
+        y: 2129
+        width: 363
+        height: 520
+      alignment: 9
+      pivot: {x: .313996464, y: .751312256}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_9
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 2389
+        width: 130
+        height: 190
+      alignment: 9
+      pivot: {x: .583770275, y: .85536468}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_10
+      rect:
+        serializedVersion: 2
+        x: 3326
+        y: 2067
+        width: 393
+        height: 518
+      alignment: 9
+      pivot: {x: .749393702, y: .731259167}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lapin_sayen_11
+      rect:
+        serializedVersion: 2
+        x: 2965
+        y: 2157
+        width: 129
+        height: 190
+      alignment: 9
+      pivot: {x: .550652564, y: .866827726}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
