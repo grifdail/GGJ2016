@@ -1,7 +1,12 @@
 fileFormatVersion: 2
 guid: c7d6a16e12a83874ab1e34fcd4e1d720
+<<<<<<< HEAD
 timeCreated: 1454250662
 licenseType: Pro
+=======
+timeCreated: 1454250529
+licenseType: Free
+>>>>>>> Decors scene
 NativeFormatImporter:
   userData: 
   assetBundleName: 
