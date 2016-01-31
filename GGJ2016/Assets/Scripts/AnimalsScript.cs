@@ -42,8 +42,7 @@ public class AnimalsScript : MonoBehaviour
     }
 
     void Update ()
-    {
-        CheckPlayer(_distVision);
+    {                               
         if (!_isFleeing && CheckPlayer(_distVision))
             StartFleeing();                
     }         
@@ -69,7 +68,8 @@ public class AnimalsScript : MonoBehaviour
     }
                            
     private IEnumerator MimicIdleAnim()
-    {      
+    {
+        print("MimicIdleAnim");
         float _timeAnimation = 3.5f;
         while (_timeAnimation > 0f)
         {
@@ -94,16 +94,21 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private IEnumerator Moves ()
-    {                            
+    {
+        print("Moves");
         Vector3 _destination = new Vector3(Random.Range(_minDist, _maxDist) * (Random.value > 0.5f ? -1 : 1) + transform.position.x, Random.Range(_minDist, _maxDist) + (Random.value > 0.5 ? -1 : 1) + transform.position.y, transform.position.z);
-
+        print(_destination);
+                                                                           
         if ((_destination - _posStart).magnitude > _radius)
-        {                                                                     
+        {                                                      
             _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
         }
-                                                                                                                   
+
+        Debug.DrawRay(transform.position, _destination - transform.position, Color.red, _speed * 2);
+                                                                                         
         while (transform.position != _destination && !Physics2D.Raycast(transform.position, _destination - transform.position, _speed*2))
-        {                                           
+        {
+            print("fvzfzeefz");
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
         }                       
@@ -114,7 +119,8 @@ public class AnimalsScript : MonoBehaviour
     }
 
     private void StartFleeing ()
-    {             
+    {
+        print("StartFleeing");
         StopAllCoroutines();
         StartCoroutine(Fleeing());   
     }
@@ -169,6 +175,7 @@ public class AnimalsScript : MonoBehaviour
 
     private bool CheckPlayer (float _dist)
     {
+        print("CheckPlayer");
         //Plusieurs paramètres : 
         // - la distance du joueur
         // - s'il fait du bruit et la vision (donc sa vitesse, les herbes et les brindilles) Pour simplifier on considère que l'herbe réduit le bruit, pas qu'elle cache le joueur

@@ -78,10 +78,12 @@ public class PlayerController : MonoBehaviour {
         float d2r = Mathf.Deg2Rad;
         Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
         targetSpeed = accelerationResponse.Evaluate(axes.magnitude);
+
         if (targetSpeed > 0.5f)
         {
             targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
         }
+
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
             targetSpeed *= runBoost;   
@@ -117,6 +119,7 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
         }
+
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
             GetComponent<Animator>().SetBool("IsJumping", true);
