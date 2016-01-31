@@ -3,29 +3,45 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Gauge : MonoBehaviour {
+                               
+    public float _currentValueFaim = 100f;
 
-    public float max = 100;
-    public float min = 0;
-    public float value = 100;
-    public float display = 0;
+    public GameObject Player;            
 
-    public GameObject Player;
-    public RectTransform rectTransform;
+    public GameObject CurseurProgression;
+    public GameObject CurseurFaim;
 
-    // Use this for initialization
-    void Start () {
-        updateBar();
+    public bool isFaim = false;
 
+    void Start ()
+    {
+        if (isFaim)
+        StartCoroutine(Faim());
     }
-	
+
 	// Update is called once per frame
 	void Update () {
-        transform.GetChild(0).localPosition = new Vector3 (1.5f + 11 * (Player.transform.position.x/700f), transform.GetChild(0).localPosition.y, transform.GetChild(0).localPosition.z);
+        if (!isFaim)
+            CurseurProgression.transform.localPosition = new Vector3 (1.5f + 11 * (Player.transform.position.x/700f), CurseurProgression.transform.localPosition.y, CurseurProgression.transform.localPosition.z);
 
-    }
+        if(isFaim)
+            CurseurFaim.transform.localPosition = new Vector3(CurseurFaim.transform.localPosition.x, -3.25f + 0.038f * _currentValueFaim, CurseurFaim.transform.localPosition.z);
+    }                                                                                        
 
-    public void updateBar()
+    IEnumerator Faim()
     {
-        //transform.localScale = new Vector3((value- min)/(max- min), 1, 1);
+        while (true)
+        { 
+            float _timeTillFaim = 2f;
+
+            while (_timeTillFaim > 0f)
+            {
+                _timeTillFaim -= Time.deltaTime;
+
+                yield return null;
+            }
+
+            _currentValueFaim -= 1f;
+        }  
     }
 }
