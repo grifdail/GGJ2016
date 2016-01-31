@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 	    if (accelerationResponse == null)
         {
-            Debug.LogError("GameObject does'nt have an accelerationResponse set");
+            Debug.LogError("GameObject doesn't have an accelerationResponse set");
             Destroy(this);
         }
         draggableInRange = new List<Draggable>();
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour {
         jumpProgression -= Time.deltaTime;
         if (jumpProgression<0)
         {
+            //GetComponent<Animator>().SetBool("isJumping", false);
             isJumping = false;
         }
         transform.Translate(_movement * Time.deltaTime * jumpBoost);
@@ -72,26 +73,40 @@ public class PlayerController : MonoBehaviour {
         float d2r = Mathf.Deg2Rad;
         Vector3 axes = new Vector3(Input.GetAxis("L_XAxis_1"), -Input.GetAxis("L_YAxis_1"), 0);
         targetSpeed = accelerationResponse.Evaluate(axes.magnitude);
-        if (targetSpeed > 0.5)
+        if (targetSpeed > 0.5f)
         {
             targetHeading = Mathf.Atan2(axes.y, axes.x) * Mathf.Rad2Deg;
         }
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
-            targetSpeed *= runBoost;
-            
+            targetSpeed *= runBoost;   
         }
         speed = Mathf.Lerp(speed, targetSpeed, acc * Time.deltaTime);
         float actualSpeed = maxSpeed * speed;
         heading = Mathf.LerpAngle(heading, targetHeading, rotationAcc * Time.deltaTime);
         _movement = actualSpeed * new Vector3(Mathf.Cos(heading * d2r), Mathf.Sin(heading * d2r), 0);
         transform.Translate(_movement * Time.deltaTime);
-        
+
+        /*if (actualSpeed == 0)
+        {
+            GetComponent<Animator>().SetBool("isCrawling", false);
+            GetComponent<Animator>().SetBool("isRunning", false);
+        }
+        else if (actualSpeed < 5f)
+        {
+            GetComponent<Animator>().SetBool("isCrawling", true);
+            GetComponent<Animator>().SetBool("isRunning", false);
+        }
+        else if (actualSpeed >= 5f)
+        {
+            GetComponent<Animator>().SetBool("isCrawling", false);
+            GetComponent<Animator>().SetBool("isRunning", true);
+        }  */
     }
 
     void UpdateContextAction ()
     {
-        foreach (Draggable  stuf in draggableInRange)
+        foreach (Draggable stuf in draggableInRange)
         {
             //item.init(this);
             if (stuf != null)
@@ -103,6 +118,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetAxis("TriggersL_1") > 0.5f && !isDragging)
         {
+            //GetComponent<Animator>().SetBool("isJumping", true);
             isJumping = true;
             jumpProgression = jumpDuration;
         }
