@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _camera = this.GetComponent<Camera>();
-        defaultSize = _camera.orthographicSize;
+        //defaultSize = _camera.orthographicSize;
         bound = GameObject.Find("SOL").GetComponent<Renderer>().bounds;
         bound.extents = new Vector3(bound.extents.x - cameraBoundSize, bound.extents.y - cameraBoundSize, 1000);
 	}
@@ -30,6 +30,6 @@ public class CameraController : MonoBehaviour {
 
         pos = bound.ClosestPoint(pos);
             transform.position = pos;
-        _camera.orthographicSize = defaultSize + playerController.speed * zoomRatio;
+        //_camera.orthographicSize = defaultSize + playerController.speed * zoomRatio;
 	}
 }
