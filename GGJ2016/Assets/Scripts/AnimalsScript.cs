@@ -30,8 +30,7 @@ public class AnimalsScript : MonoBehaviour
     private float _debugRadiusDetection;
 
     void Start()
-    {
-        print(Mathf.Atan2(3, 4) * Mathf.Rad2Deg);
+    {                                               
         //Lance l'animation d'Idle  
         //Ne bouge pas tant qu'il joue son anim
         //Lorsqu'il atteint une fin de boucle, il lance la fonction depuis l'animation
@@ -49,7 +48,7 @@ public class AnimalsScript : MonoBehaviour
             StartFleeing();                
     }         
    
-    void OnTriggerEnter (Collider coll)
+    void OnTriggerEnter2D (Collider2D coll)
     {                                 
         if (coll.gameObject.tag == "Player")
         {                
@@ -103,7 +102,7 @@ public class AnimalsScript : MonoBehaviour
             _destination = new Vector3(_posStart.x - transform.position.x /4f, _posStart.y - transform.position.y / 4f, transform.position.z);
         }
                                                                                                                    
-        while (transform.position != _destination && !Physics.Raycast(transform.position, _destination - transform.position, _speed*2))
+        while (transform.position != _destination && !Physics2D.Raycast(transform.position, _destination - transform.position, _speed*2))
         {                                           
             this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speed);
             yield return null;
@@ -135,7 +134,7 @@ public class AnimalsScript : MonoBehaviour
             {
                 _timeBeforeCheckingPlayer -= Time.deltaTime;
 
-                if (!Physics.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
+                if (!Physics2D.Raycast(transform.position, _destination - transform.position, _speedRun * 2))
                 this.transform.position = Vector3.MoveTowards(transform.position, _destination, _speedRun);
 
                 if (_timeTillChangeDirection > 0f)
